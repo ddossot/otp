@@ -1,0 +1,345 @@
+<html>
+<title>Currently in the 'pu' branch</title>
+<style type="text/css" media="all">
+    body {
+      width: 600px;
+    }
+</style>
+<body>
+<h1>Currently in the 'pu' branch</h1>
+<p>The comment about each topic branch is taken from the latest
+<em>What's cooking in erlang/otp</em> email and may no longer apply if
+the topic branch has been updated.
+<ul>
+<li><a href="http://github.com/erlang/otp/commit/e5461f309af8473fbd88a84bf07138c3327b184f">sv/format_status-name-handling</a> (stdlib, wx):
+
+<ul>
+<li><a href="http://github.com/erlang/otp/commit/4e81da599ea2607fd7cd58390dccf3a904bb00dd">handle {global, term()} names in format_status/2</a></li>
+</ul>
+<p></li>
+<li><a href="http://github.com/erlang/otp/commit/de6123f050558265bc535ada96fe02c2d8166790">uw/mnesia-overload</a> (mnesia):
+
+<ul>
+<li><a href="http://github.com/erlang/otp/commit/82c090488eb76d16e8b828bb8f050afd0949e4c4">Enable continuous monitoring of mnesia overload status</a></li>
+</ul>
+<p></li>
+<li><a href="http://github.com/erlang/otp/commit/ceec9f5299cc0f003e26c82acc11b894d4b09f0e">uw/mnesia-schema-merge</a> (mnesia):
+
+<ul>
+<li><a href="http://github.com/erlang/otp/commit/3f70f3def4e33828da4237b07cbee9f73121c661">Allow a user_defined function to wrap mnesia_schema:merge_schema()</a></li>
+</ul>
+<p></li>
+<li><a href="http://github.com/erlang/otp/commit/86b9241bc3fcf5d2f2bb8342c37ba0dd07a83fce">uw/epmd-fullnames</a> (kernel):
+
+<ul>
+<li><a href="http://github.com/erlang/otp/commit/e0774bee2b75c56daa7288edc990488fa5c8d07e">Allow the erlang nodename host part to differ from the hostname</a></li>
+</ul>
+<p></li>
+<li><a href="http://github.com/erlang/otp/commit/847bd0042bbd291992daf232c36a27d4248a2411">bg/compiler-attributes</a> (compiler):
+
+<ul>
+<li><a href="http://github.com/erlang/otp/commit/7d9dd7695e755c393c66d84667fc460b6be4341c">Remove opaque declarations from the attributes</a></li>
+</ul>
+<p></li>
+<li><a href="http://github.com/erlang/otp/commit/d5c26c1bbc6df579bf3d0f2113da53b8ec07ce22">ms/file-exclusive-mode</a> (erts, kernel):
+
+<ul>
+<li><a href="http://github.com/erlang/otp/commit/5d1253d36c7147b149dc08ae1d02ed6a37f284a2">Support opening files in exclusive mode</a></li>
+</ul>
+<p></li>
+<li><a href="http://github.com/erlang/otp/commit/242f44e3b0607ec1a34ea3d0bd39c34f4b14106b">ta/extend-nif-api</a> (erts):
+
+<ul>
+<li><a href="http://github.com/erlang/otp/commit/ef10379d59898badfc4e22832cf8f7f6b8a80fde">erl_nif: add make_atom_len, make_existing_atom_len and make_string_len</a></li>
+<li><a href="http://github.com/erlang/otp/commit/b37675e2e5ff142aa9983711383d117dd11a0a87">erl_nif: add enif_get_atom_length and enif_get_list_length</a></li>
+<li><a href="http://github.com/erlang/otp/commit/78405b1cdccec6a3fdeef614f622f9a2c161b7fd">erl_nif: add enif_is_list and enif_is_tuple</a></li>
+</ul>
+<p></li>
+<li><a href="http://github.com/erlang/otp/commit/7d624966f6bfc1c1189cf71d656fc7657e10e3f4">se/spawn_drv_win_deadlock</a> (erts):
+
+<ul>
+<li><a href="http://github.com/erlang/otp/commit/4fe6e7eeb628c2e1903274c04256c1bdadd50cb9">Fix deadlock in spawn driver on windows</a></li>
+</ul>
+<p></li>
+<li><a href="http://github.com/erlang/otp/commit/48f1323e6a4f479db4fbeb241293edc067724575">bg/compiler-cover-and-clean</a> (compiler, erts, hipe):
+
+<ul>
+<li><a href="http://github.com/erlang/otp/commit/d2ba82d07ffc69fb728082c6307066bfd9e5f42f">v3_life: Remove clause that cannot match in match_fail/3</a></li>
+<li><a href="http://github.com/erlang/otp/commit/e17bb1e8cbd1d1e3057c320dfec83569ab529a70">v3_life tests: Cover exception handling code in v3_life:function/1</a></li>
+<li><a href="http://github.com/erlang/otp/commit/f4224dd1ad1bfc5d6c771cee8972230a702e09e8">beam_type: Remove redundant clause</a></li>
+<li><a href="http://github.com/erlang/otp/commit/507e6aa3f4f9ba3ce533e463ae1a318392fbe4b2">v3_core tests: Cover make_bool_switch_guard/5</a></li>
+<li><a href="http://github.com/erlang/otp/commit/ac5f2e14c0f047dbaed28e175a2a0767a170b218">v3_core tests: Cover handling of pattern aliases</a></li>
+<li><a href="http://github.com/erlang/otp/commit/80088ae04f3736e711fede5c5e877d103a8662a0">v3_core: Remove a clause in is_simple/1 that cannot match</a></li>
+<li><a href="http://github.com/erlang/otp/commit/30c1be31cc1ec4bdbf4854fbe04718acc4e18f27">v3_core: Remove unused support for generating compilation errors</a></li>
+<li><a href="http://github.com/erlang/otp/commit/883db6a305e6a7213b7a7174787e080b288d595e">Remove stray support for the put_literal/2 instruction</a></li>
+<li><a href="http://github.com/erlang/otp/commit/cb73349d360c3eec1fe1fbdbd3916507549c30ca">Remove stray support for the bs_bits_to_bytes2/2 instruction</a></li>
+<li><a href="http://github.com/erlang/otp/commit/4bd12b34808b5db26406208a5486e3f20f495e58">Remove the bs_bits_to_bytes/3 instruction</a></li>
+<li><a href="http://github.com/erlang/otp/commit/c1a30454c4021e047502e6165629458a564161b0">Cover handling of 'math' BIFs</a></li>
+<li><a href="http://github.com/erlang/otp/commit/3672c7a495439f9191294822430276471f2cf8d8">beam_bool: Remove a clause in live_regs/1 that cannot match</a></li>
+.
+.
+.
+</ul>
+<p>.
+.
+.
+
+<p>.
+.
+.
+
+<p>
+</li>
+<li><a href="http://github.com/erlang/otp/commit/7956ba100f59c64c4651d2cdc34816c7ad7fb385">jr/cover-src-path</a> (tools):
+
+<ul>
+<li><a href="http://github.com/erlang/otp/commit/b9d5068e78fac922a2e80af9973de24297a2140b">Fix searching for source files in analyse_to_file/*</a></li>
+</ul>
+<p></li>
+<li><a href="http://github.com/erlang/otp/commit/a00fa20403b6bab60642c210cd724f26f2d575fe">fm/file-operations</a> (erts, kernel):
+
+<ul>
+<li><a href="http://github.com/erlang/otp/commit/c2dbc5e6c042b84ed56bffd8cc28d9de465ba97b">Update preloaded modules</a></li>
+<li><a href="http://github.com/erlang/otp/commit/6fd827d55f84193eac6d273f7403cf5f4ea90690">Add file:advise/4 - a wrapper to the POSIX syscall posix_fadvise</a></li>
+<li><a href="http://github.com/erlang/otp/commit/d96666a67893f5f1f4b1b7aa4670c9cc13cf3eb8">Add file:datasync/1 for syncing file contents only</a></li>
+</ul>
+<p></li>
+<li><a href="http://github.com/erlang/otp/commit/f8d5514538e1921200daf1eb9a755a5a70b3abf6">ta/asn1-reporting</a> (asn1):
+
+<ul>
+<li><a href="http://github.com/erlang/otp/commit/93face25db7222e5c0e4950caaa8acbf6d9bc2dc">asn1ct: Make formatting of errors and warnings consistent</a></li>
+</ul>
+<p></li>
+<li><a href="http://github.com/erlang/otp/commit/588043b564d60708b0069cbe18fad8b93f00f702">bg/opt-receive</a> (compiler, erts, hipe, kernel, otp, stdlib, test_server):
+
+<ul>
+<li><a href="http://github.com/erlang/otp/commit/84f65232d00de87042b11b07db4dad30cc7e1fa4">Test that gen_server:call/2,3 are fast even with a huge message queue</a></li>
+<li><a href="http://github.com/erlang/otp/commit/c8c736e24cd92f1ec36645fe69deb48bea56b50b">erts: Add tests for the receive optimization</a></li>
+<li><a href="http://github.com/erlang/otp/commit/cdd4f992ec0c64c086255f87f1c6282d2a0a7a4d">Update primary bootstrap</a></li>
+<li><a href="http://github.com/erlang/otp/commit/9c91901e8e57fd6366fd966e754a62a8a205c000">erts: Implement recv_mark/1 and recv_set/1 for real</a></li>
+<li><a href="http://github.com/erlang/otp/commit/f7829c91d742f1daea27b7ff5d8dcb5f262fd3a9">compiler tests: Cover the error handling code in beam_receive</a></li>
+<li><a href="http://github.com/erlang/otp/commit/f39e0b6bbc5f5d9f6a55b87847bcad7707309883">compiler test: Test optimization of receive statements</a></li>
+<li><a href="http://github.com/erlang/otp/commit/1d3148a8532b9319265fbe4107cdde81b554b3a2">Optimize selective receives in the presence of a large message queue</a></li>
+<li><a href="http://github.com/erlang/otp/commit/d60f055697cfe8e7f94be4d291d49bb00a66bc52">Introduce the new recv_mark/1 and recv_mark/1 instructions</a></li>
+<li><a href="http://github.com/erlang/otp/commit/ea0f50dfbc8ec99820b81f99be81ada727bb3cf8">Compile tests that communicate with R12 nodes with the r12 option</a></li>
+<li><a href="http://github.com/erlang/otp/commit/f0d8728a851901e9080eb35aee0b6b8e24b2d91e">Move p_run/2 to test_lib</a></li>
+<li><a href="http://github.com/erlang/otp/commit/23362aeb8f364adb64a0825ea40dcb1158babe13">gen: Inline wait_resp_mon/2 to help the compiler optimize</a></li>
+</ul>
+<p>
+<font color="red">This topic branch introduces 4 lines with whitespace errors.</font>
+<p></li>
+<li><a href="http://github.com/erlang/otp/commit/fdf4a95170ac48c6d0f8b36eb1c972a00d3c29ec">cf/timer_tc</a> (stdlib):
+
+<ul>
+<li><a href="http://github.com/erlang/otp/commit/2cca6506bafedc5ebb720510151a98602133d8e5">Add timer:tc/2 to measure the elapsed time of anonymous functions</a></li>
+</ul>
+<p></li>
+<li><a href="http://github.com/erlang/otp/commit/26dd3a60e970ec21d102317302156aa888dc71a8">hb/edoc</a> (edoc):
+
+<ul>
+<li><a href="http://github.com/erlang/otp/commit/516e16cb68e041ab571d6227581a0edc7ed03aa6">EDoc and Dialyzer specs and types</a></li>
+</ul>
+<p>
+<font color="red">This topic branch introduces 39 lines with whitespace errors.</font>
+<p></li>
+<li><a href="http://github.com/erlang/otp/commit/6833e11d183121de1635bb4cba55ce066f813cbe">bg/compiler</a> (compiler, stdlib):
+
+<ul>
+<li><a href="http://github.com/erlang/otp/commit/8adc56beec641fc8b18d2503afd205a3c09804dc">beam_peep: Remove optimization already done by beam_dead</a></li>
+<li><a href="http://github.com/erlang/otp/commit/36267395c95eca216105beb29116f02dd10112a6">beam_dead: Combine is_eq_exact instructions into select_val instructions</a></li>
+<li><a href="http://github.com/erlang/otp/commit/07ceb9724a507c79dd72e72ab15cd9132cc3cd3f">Evaluate is_record/3 at compile-time using type information</a></li>
+<li><a href="http://github.com/erlang/otp/commit/4bbe919a4150685cc9e6b0b9bbb1405e8b33c8fc">Evaluate element/2 at compile-time using type information</a></li>
+<li><a href="http://github.com/erlang/otp/commit/dce204e1ae47abf8c1074242b6d77f9b873ca239">erl_expand_records: Replace is_record() with matching</a></li>
+</ul>
+<p></li>
+<li><a href="http://github.com/erlang/otp/commit/02fec99ee34e5d5fdfec345f75760ec3aefc1d1b">er/ei-decode_msg</a> (erl_interface):
+
+<ul>
+<li><a href="http://github.com/erlang/otp/commit/864091a37030eac122b4029377c05985338586fb">Add function to decode distribution header</a></li>
+</ul>
+<p>Needs documentation and test cases.
+
+<p>Action expected from: Topic author
+
+<p>
+</li>
+<li><a href="http://github.com/erlang/otp/commit/332be1400351b6c83dcd39dc9882dd3d87372be6">ks/export_type</a> (compiler, dialyzer, hipe, kernel, stdlib, syntax_tools):
+
+<ul>
+<li><a href="http://github.com/erlang/otp/commit/8c22ad6761cbc2f501ede4e198292d483aca8c5c">erl_lint: Issue warnings for undefined exported types</a></li>
+<li><a href="http://github.com/erlang/otp/commit/3ae85e9bc9cb9168b724eb524e5d63dd58557e5e">Minor fix in a print message</a></li>
+<li><a href="http://github.com/erlang/otp/commit/0f9e42e01a88ecda2650d95df1145c17d914dcad">Add handling of unknown types</a></li>
+<li><a href="http://github.com/erlang/otp/commit/e71d8f6a0b1bcdc14baab796971801fee90dc071">Add declaration for exported types</a></li>
+<li><a href="http://github.com/erlang/otp/commit/b88e659435e9c70eaf2772294ed0732770503741">Add types and specs; performed some cleanups also</a></li>
+<li><a href="http://github.com/erlang/otp/commit/750f316f78c2b84c4825a3f9982958607cd4304f">erl_scan: Add declarations for exported types</a></li>
+<li><a href="http://github.com/erlang/otp/commit/7dcabb98cdfe15f792384c5fac9f380627566a04">stdlib: Add declarations for exported types</a></li>
+<li><a href="http://github.com/erlang/otp/commit/6a2cce22723297c631626bbe2b0a2c660dd5ca4b">hipe: Add declarations for exported types</a></li>
+<li><a href="http://github.com/erlang/otp/commit/a53c99eb9a8fc3bf3acf375f95dcdd1e6b71e41d">compiler: Add declarations for exported types</a></li>
+<li><a href="http://github.com/erlang/otp/commit/839cc8407896885020713beb2a483c6f36bec2f0">syntax_tools: Add declarations for exported types</a></li>
+<li><a href="http://github.com/erlang/otp/commit/5fdf89f35884da08f86b8be1194f5c3baacafa60">kernel: Add declaration for exported types</a></li>
+<li><a href="http://github.com/erlang/otp/commit/ce76175fe3eb825816c7c2348d8ace6e82a7e788">Support -export_type() in dialyzer and erl_types</a></li>
+.
+.
+.
+</ul>
+<p></li>
+<li><a href="http://github.com/erlang/otp/commit/87a45e3062297baafa9992f1f140e5656f8c4fdb">dp/shell-line-editing</a> (kernel, stdlib):
+
+<ul>
+<li><a href="http://github.com/erlang/otp/commit/91e912b49d035821301e7005955908f2040a495f">Readline-style line edit history</a></li>
+</ul>
+<p></li>
+<li><a href="http://github.com/erlang/otp/commit/3b5cdaadf002c40a430fdad31fbd93264d4cceee">jn/ic-docs-without-java</a> (ic):
+
+<ul>
+<li><a href="http://github.com/erlang/otp/commit/2016a084feb031aa8c845b883a66d35331b81d39">Permit building and installing documentation without Java</a></li>
+</ul>
+<p></li>
+<li><a href="http://github.com/erlang/otp/commit/27078b3f47d279e67288fcff0508c4001a712eaa">jf/run_erl-disable-flow-control</a> (erts):
+
+<ul>
+<li><a href="http://github.com/erlang/otp/commit/d0775cd6bc64f5eec41d04e04441fe6a6e058927">Teach run_erl RUN_ERL_DISABLE_FLOWCNTRL for disabling flow control</a></li>
+</ul>
+<p></li>
+<li><a href="http://github.com/erlang/otp/commit/7088f1669bab0ce62fc722d15d62aa515704a919">sv/format_status_error_info</a> (stdlib):
+
+<ul>
+<li><a href="http://github.com/erlang/otp/commit/fa4a3b2be8661c21d1abed1cbf75c9d6a2491d00">Add support for the format_status callback to gen_event</a></li>
+<li><a href="http://github.com/erlang/otp/commit/53bf35aa4409cb14c30ffb2723ed274b53c7538c">Extend format_status for gen_server/gen_fsm termination error logging</a></li>
+</ul>
+<p></li>
+<li><a href="http://github.com/erlang/otp/commit/3c6502e8596eebf15d8c4a746fe62b0797771b86">jl/windows-file-share-delete</a> (erts):
+
+<ul>
+<li><a href="http://github.com/erlang/otp/commit/0544a2c69fca7d7edb6cdbec527cc9898d88f10c">Windows: Open files with FILE_SHARE_DELETE to get closer to UNIX semantics</a></li>
+</ul>
+<p></li>
+<li><a href="http://github.com/erlang/otp/commit/fdb0fdbf432232e3c3d742536e384cf649e46548">am/kernel-stops</a> (kernel):
+
+<ul>
+<li><a href="http://github.com/erlang/otp/commit/397343b6ac1509e99fb14e577deed5bc72193227">Change restart behavior of network apps from permanent to transient</a></li>
+</ul>
+<p></li>
+<li><a href="http://github.com/erlang/otp/commit/798ae185e8ecd7c459ee03160a72af765450b80e">am/net_kernel_catchall</a> (kernel):
+
+<ul>
+<li><a href="http://github.com/erlang/otp/commit/77ee10965a568ed8aca06b5e045f4a05453d3963">Add catch all handle_call to net_kernel</a></li>
+</ul>
+<p></li>
+<li><a href="http://github.com/erlang/otp/commit/dc05d14a81b194599c2d1997f44be69366abf539">ra/include-public_key-in-ssh</a> (ssh):
+
+<ul>
+<li><a href="http://github.com/erlang/otp/commit/3a0c2c5b57ff27278ef5883926e4fbbea4e66071">Added public_key among ssh applications.</a></li>
+</ul>
+<p></li>
+<li><a href="http://github.com/erlang/otp/commit/2d111f4321340c31260ed490ac84c8ce831f1cfe">mh/ssh_channel-init-no-catch</a> (ssh):
+
+<ul>
+<li><a href="http://github.com/erlang/otp/commit/bb7eaa5ba450429f28b5dae72d9d0afc7b23d67c">Remove pointless catch from ssh_channel:init/1.</a></li>
+</ul>
+<p></li>
+<li><a href="http://github.com/erlang/otp/commit/e164ba9acdc4afde840c3aceabb9afc9ba6862bb">gl/jinterface-pom</a> (jinterface, otp):
+
+<ul>
+<li><a href="http://github.com/erlang/otp/commit/5acf5fa30755eef89c2b04edeccae487741ffa55">Exclude jinterface build artifact from git</a></li>
+<li><a href="http://github.com/erlang/otp/commit/aa68190592c0cabaabd275857ecd5bd04b81fd5e">Add pom.xml for jinterface build</a></li>
+</ul>
+<p>
+<font color="red">This topic branch introduces 0.5 lines with whitespace errors.</font>
+<p></li>
+<li><a href="http://github.com/erlang/otp/commit/0621e68dcd5c96b2efe55b2792c1bde37bb31b67">ks/cleanups</a> (compiler, debugger, docbuilder, gs, stdlib):
+
+<ul>
+<li><a href="http://github.com/erlang/otp/commit/902166786596b556c56b296742bf7b99414e0a5a">compiler: Fix incorrect types and specs</a></li>
+<li><a href="http://github.com/erlang/otp/commit/edfbc4b81ca39902ea5aae78275fffd232f09a04">escript: Add more types to records</a></li>
+<li><a href="http://github.com/erlang/otp/commit/42c0c33077f54a3862d07810addd07ef39402100">debugger: Clean up as suggested by tidier</a></li>
+<li><a href="http://github.com/erlang/otp/commit/c22830a7cb9a2a00624f8548401c9154244c7b3e">docbuilder: Clean up as suggested by tidier</a></li>
+<li><a href="http://github.com/erlang/otp/commit/eda4f7a51b270419d84a6dad4bc2b22835cde75e">gs: Clean up as suggested by tidier</a></li>
+</ul>
+<p>Was formerly called ks/cleanups-after-r13b04.
+
+<p>
+</li>
+<li><a href="http://github.com/erlang/otp/commit/55ca4944ef73a4c369632c15ed6371280f6d41e1">bg/safer-local_to_univ</a> (erts):
+
+<ul>
+<li><a href="http://github.com/erlang/otp/commit/0f62f0b532013f69b7140e9bf3a4ea62dc0a4de7">erl_time_sup.c: test for error return from mktime()</a></li>
+</ul>
+<p>We will not include this branch in R13B04 for two reasons:
+
+<p>  o We are not 100% sure that this change is harmless on all
+    platforms in all timezones.
+  o We have an idea how the underlying problem can be fixed in
+    the calendar module (only) and I plan to try it out after the
+    release. We will keep this branch in pu as a reminder.
+
+<p>Action expected from: Björn Gustavsson
+
+<p>
+</li>
+<li><a href="http://github.com/erlang/otp/commit/c912cfe0755d791b7899bb62b3b0c301091b3376">kr/gs-browser</a> (gs):
+
+<ul>
+<li><a href="http://github.com/erlang/otp/commit/802d15915daf790b4ff60543526ba61283933ead">Change lib/gs/src/tool_utils.erl to select multiple browsers other than Netscape</a></li>
+</ul>
+<p>This topic branch introduces a new call to the deprecated regexp module.
+
+<p>Action expected from: Topic author or anyone else with an interest to
+advance the topic
+
+<p>
+
+</li>
+<li><a href="http://github.com/erlang/otp/commit/ecc1ae6030e79a21cb088fc6ac78d86976fc9cfd">bg/temp-hipe-fixes</a> (compiler, hipe, kernel):
+
+<ul>
+<li><a href="http://github.com/erlang/otp/commit/234e13ea60502a14f42e696778ca09ed034e8879">Avoid crash by skipping compilation_SUITE:on_load/1</a></li>
+<li><a href="http://github.com/erlang/otp/commit/9fcb48b75a27cd9d2d245b263d2c7519e12c31db">Inline less aggressively for native-code compilation</a></li>
+<li><a href="http://github.com/erlang/otp/commit/ef71597b2ff78a1b87e56fd5df4221db178915eb">Crudely fix return type for the lists:key{search,find,member}/3</a></li>
+<li><a href="http://github.com/erlang/otp/commit/2a81b1afaa5d3b401d8b4a551da850de347309f0">seq_trace_SUITE: Don't native-compile</a></li>
+<li><a href="http://github.com/erlang/otp/commit/3befa76d1e24108acb5cb757157c2fb3384a8e51">Disable native code if on_load is used</a></li>
+<li><a href="http://github.com/erlang/otp/commit/97aa2daffc9824c88d7c7152b614408a1372261c">andor_SUITE: Don't native-compile</a></li>
+</ul>
+<p>This branch contains temporary workarounds to avoid failing test
+cases and is never intended to graduate.
+
+<p>
+</li>
+<li><a href="http://github.com/erlang/otp/commit/7a0ee6b74e59dea6c0dfb25ca20e0dc320b2d5c9">jp/dependencies_makefile</a> (compiler, erts):
+
+<ul>
+<li><a href="http://github.com/erlang/otp/commit/434e2ca3a238fe07bcd327ace4d90618511a98b4">squash! eliminate dialyzer warning</a></li>
+<li><a href="http://github.com/erlang/otp/commit/bf2708d3b92705320679c51ace9d2c208d779298">squash! fix snprintf for Windows</a></li>
+<li><a href="http://github.com/erlang/otp/commit/7cbc4374a3621e26067c187ce36d3e75dfa70873">Add dependencies Makefile generation to erlc(1) and compile(3)</a></li>
+</ul>
+<p>Approved in principle by the OTP Technical Board; now awaits a closer
+review of the implementation.
+
+<p>Action expected from: Björn Gustavsson (the reviewer)
+
+<p>
+</li>
+<li><a href="http://github.com/erlang/otp/commit/ca0953e693d62d75b7ecc05874a99dfd4987981e">db/tv_nthtail_fix</a> (tv):
+
+<ul>
+<li><a href="http://github.com/erlang/otp/commit/abe07595f90a5a83ce96100fbd1c0da40a765704">Fix for tv which restarts while trying to open a table</a></li>
+</ul>
+<p>Since our long-term goal is to migrate from gs towards wx,
+maintaining the old gs applications has a low priority for
+the Erlang/OTP team. Therefore, we will accept patches that
+seem sound, but we are unlikely to spend much of our own time
+fixing bugs.
+
+<p>The author of this topic branch has found the real reason for
+the problem, but uncovered additional issues.
+
+<p>Action expected from: The topic author - to decide whether to
+include the topic branch (which is a workaround, but does eliminate
+the crash) or to wait for a better fix from himself or someone else
+with an interest to advance the topic.
+
+<p>
+</li>
+</ul>
+</body>
+</html>
