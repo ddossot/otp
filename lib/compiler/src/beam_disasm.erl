@@ -1008,9 +1008,6 @@ resolve_inst({gc_bif2,Args},Imports,_,_) ->
 %%
 %% New instructions for creating non-byte aligned binaries.
 %%
-resolve_inst({bs_bits_to_bytes2,[_Arg2,_Arg3]=Args},_,_,_) ->
-    [A2,A3] = resolve_args(Args),
-    {bs_bits_to_bytes2,A2,A3};
 resolve_inst({bs_final2,[X,Y]},_,_,_) ->
     {bs_final2,X,Y};
 
