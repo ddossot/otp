@@ -87,7 +87,7 @@ locked({button, Digit}, {SoFar, Code}) ->
     case [Digit|SoFar] of
         Code ->
             do_unlock(),
-            {next_state, open, {[], Code}, 3000};
+            {next_state, open, {[], Code}, 30000};
         Incomplete when length(Incomplete)<length(Code) ->
             {next_state, locked, {Incomplete, Code}};
         _Wrong ->
