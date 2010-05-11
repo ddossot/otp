@@ -24,17 +24,22 @@
 %% Type specification data structures
 
 %% @type t_spec() = #t_spec{name = t_name(),
-%%                          type = t_type(),
-%%                          defs = [t_def()]}
+%%                          clauses = [t_clause()]}
 
--record(t_spec, {name, type, defs=[]}).		% function specification
+-record(t_spec, {name, clauses}).	% function specification
 
-%% @type type() = t_atom() | t_fun() | t_integer() | t_list() | t_nil()
-%%              | t_tuple() | t_type() | t_union() | t_var()
+%% @type t_clause() = #t_clause{type = t_fun(),
+%%                              defs = [t_def()]}
 
-%% @type t_typedef() = #t_typedef{name = t_name(),
+-record(t_clause, {type, defs=[]}).
+
+%% @type type() = t_atom() | t_binary() | t_float() | t_fun() | t_integer()
+%%              | t_integer_range() | t_list() | t_nil()| t_nonempty_list()
+%%              | t_record() | t_tuple() | t_type() | t_union() | t_var() 
+
+%% @type t_typedef() = #t_typedef{name = t_name() | t_record_name(),
 %%                                args = [type()],
-%%                                type = type(),
+%%                                type = type() | undefined,
 %%                                defs = [t_def()]}
 
 -record(t_typedef, {name, args, type,
@@ -45,7 +50,7 @@
 
 -record(t_throws, {type, defs=[]}).		% exception declaration
 
-%% @type t_def() = #t_def{name = t_name(),
+%% @type t_def() = #t_def{name = t_type() | t_var() | t_record_name(),
 %%                        type = type()}
 
 -record(t_def, {name, type}).			% local definition 'name = type'
@@ -75,18 +80,30 @@
 %%                          name = t_name(),
 %%                          args = [type()]}
 
--record(t_type, {a=[], name, args = []}).	% abstract type 'name(...)'
+-record(t_type, {a=[],                     % abstract type 'name(...)'
+                 name, 
+                 args = []}).
 
 %% @type t_union() = #t_union{a = list(),
 %%                            types = [type()]}
 
 -record(t_union, {a=[], types = []}).	% union type 't1|...|tN'
 
+%% @type t_guard() = #t_guard{a = list(),
+%%                            name = t_name(),
+%%                            args = [type()]}
+
+-record(t_guard, {a=[], name, args}).
+
 %% @type t_fun() = #t_fun{a = list(),
 %%                        args = [type()],
-%%                        range = type()}
+%%                        range = type(),
+%%                        guards = [t_guard()]}
 
--record(t_fun, {a=[], args, range}).	% function '(t1,...,tN) -> range'
+-record(t_fun, {a=[],        % function '(t1,...,tN) -> range'
+                args,
+                range,
+                guards=[]}).  % function '(t1,...,tN) -> range when guards'
 
 %% @type t_tuple() = #t_tuple{a = list(),
 %%                            types = [type()]}
@@ -102,6 +119,11 @@
 
 -record(t_nil, {a=[]}).			% empty-list constant '[]'
 
+%% @type t_nonempty_list() = #t_nonempty_list{a = list(),
+%%                                            type = type()}
+
+-record(t_nonempty_list, {a=[], type}).	% list type '[type, ...]'
+
 %% @type t_atom() = #t_atom{a = list(),
 %%                          val = atom()}
 
@@ -112,16 +134,34 @@
 
 -record(t_integer, {a=[], val}).	% integer constant
 
+%% @type t_integer_range() = #t_integer_range{a = list(),
+%%                                            from = integer(),
+%%                                            to = integer()}
+
+-record(t_integer_range, {a=[], from, to}).
+
+%% @type t_binary() = #t_binary{a = list(),
+%%                              base_size = integer(),
+%%                              unit_size = integer()}
+
+-record(t_binary, {a=[], base_size = 0, unit_size = 0}).
+
 %% @type t_float() = #t_float{a = list(),
 %%                            val = float()}
 
 -record(t_float, {a=[], val}).		% floating-point constant
 
 %% @type t_record() = #t_list{a = list(),
-%%                            name = type(),
+%%                            name = t_atom(),
 %%                            fields = [field()]}
 
--record(t_record, {a=[], name, fields = []}).	% record type '#r{f1,...,fN}'
+-record(t_record, {a=[],                 % record type '#r{f1,...,fN}'
+                   name,
+                   fields = []}).
+
+%% @type t_record_name() = #t_record_name{a = list(), name = atom()}
+
+-record(t_record_name, {a=[], name}).
 
 %% @type t_field() = #t_field{a = list(),
 %%                            name = type(),

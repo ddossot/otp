@@ -31,7 +31,7 @@
 
 -export([app/1, app/2, package/1, module/1, module/2, module/3,
 	 function/2, function/3, function/4, type/1, type/2, type/3,
-	 to_string/1, to_label/1, get_uri/2, is_top/2,
+         record/1, to_string/1, to_label/1, get_uri/2, is_top/2,
 	 relative_module_path/2, relative_package_path/2]).
 
 -import(edoc_lib, [join_uri/2, escape_uri/1]).
@@ -79,6 +79,8 @@ type(M, T) ->
 type(App, M, T) ->
     module(App, M, type(T)).
 
+record(R) ->
+    {record, R}.
 
 %% Creating a print string for a reference
 
@@ -103,7 +105,9 @@ to_string({type, T}) ->
 to_label({function, F, A}) ->
     escape_uri(atom_to_list(F)) ++ "-" ++ integer_to_list(A);
 to_label({type, T}) ->
-    "type-" ++ escape_uri(atom_to_list(T)).
+    "type-" ++ escape_uri(atom_to_list(T));
+to_label({record, R}) ->
+    "record-" ++ escape_uri(atom_to_list(R)).
 
 get_uri({app, App}, Env) ->
     join_uri(app_ref(App, Env), ?INDEX_FILE);

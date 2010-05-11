@@ -292,10 +292,11 @@ parse_expr(Data, Line, _Env, _Where) ->
 
 parse_spec(Data, Line, _Env, {_, {F, A}} = _Where) ->
     Spec = edoc_parser:parse_spec(Data, Line),
-    #t_spec{name = N, type = #t_fun{args = As}} = Spec,
-    if length(As) /= A ->
+    #t_spec{name = N, clauses = Cs} = Spec,
+    case arity_matches(Cs, A) of
+        false ->
 	    throw_error(Line, "@spec arity does not match.");
-       true ->
+        true ->
 	    case N of
 		undefined ->
 		    Spec#t_spec{name = #t_name{module = [], name = F}};
@@ -305,6 +306,10 @@ parse_spec(Data, Line, _Env, {_, {F, A}} = _Where) ->
 		    throw_error(Line, "@spec name does not match.")
 	    end
     end.
+
+arity_matches(Cs, A) ->
+    lists:all(fun(#t_clause{type = #t_fun{args = As}}) -> length(As) =:= A
+              end, Cs).
 
 parse_param(Data, Line, _Env, {_, {_F, _A}} = _Where) ->
     edoc_parser:parse_param(Data, Line).
@@ -322,8 +327,8 @@ parse_contact(Data, Line, _Env, _Where) ->
 
 parse_typedef(Data, Line, _Env, _Where) ->
     Def = edoc_parser:parse_typedef(Data, Line),
-    {#t_typedef{name = #t_name{name = T}}, _} = Def,
-    case edoc_types:is_predefined(T) of
+    {#t_typedef{name = #t_name{name = T}, args = As}, _} = Def,
+    case edoc_types:is_predefined(T, length(As)) of
 	true ->
 	    throw_error(Line, {"redefining built-in type '~w'.", [T]});
 	false ->

@@ -61,6 +61,7 @@ format_error(float) -> "bad float";
 format_error(Other) -> io_lib:write(Other).
 
 %% Reserved words, not atoms:
+reserved('when') -> true;
 reserved('where') -> true;
 reserved(_) -> false.
 
@@ -139,6 +140,10 @@ scan1([$"|Cs0], Toks, Pos) ->				% String
 	    scan_error({illegal, string}, Pos)
     end;
 %% Punctuation characters and operators, first recognise multiples.
+scan1([$<,$<|Cs], Toks, Pos) ->
+    scan1(Cs, [{'<<',Pos}|Toks], Pos);
+scan1([$>,$>|Cs], Toks, Pos) ->
+    scan1(Cs, [{'>>',Pos}|Toks], Pos);
 scan1([$-,$>|Cs], Toks, Pos) ->
     scan1(Cs, [{'->',Pos}|Toks], Pos);
 scan1([$:,$:|Cs], Toks, Pos) ->
@@ -157,8 +162,8 @@ scan_variable(C, Cs, Toks, Pos) ->
     {Wcs,Cs1} = scan_name(Cs, []),
     W = [C|reverse(Wcs)],
     case W of
-	"_" ->
-	    scan_error({illegal,token}, Pos);
+        "_" ->
+            scan1(Cs1, [{an_var,Pos,'_'}|Toks], Pos);
 	_ ->
 	    case catch list_to_atom(W) of
 		A when is_atom(A) ->

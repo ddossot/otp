@@ -5,6 +5,7 @@
   {vsn, "%VSN%"},
   {modules, [edoc,
 	     edoc_data,
+             edoc_dia,
 	     edoc_doclet,
 	     edoc_extract,
 	     edoc_layout,

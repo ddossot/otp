@@ -71,7 +71,8 @@
 	      packages,
 	      app_default,
 	      macros = [],
-	      includes = []
+	      includes = [],
+              dialyzer_data = none
 	     }).
 
 %% Simplified comment data

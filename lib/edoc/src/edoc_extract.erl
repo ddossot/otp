@@ -125,9 +125,10 @@ source(Tree, File0, Env, Opts) ->
     Env1 = Env#env{module = Name,
 		   package = Package,
 		   root = edoc_refs:relative_package_path('', Package)},
-    Env2 = add_macro_defs(module_macros(Env1), Opts, Env1),
-    Entries1 = get_tags([Header, Footer | Entries], Env2, File),
-    Data = edoc_data:module(Module, Entries1, Env2, Opts),
+    Env2 = edoc_dia:add_data(Forms, Entries, Opts, Name, Env1),
+    Env3 = add_macro_defs(module_macros(Env1), Opts, Env2),
+    Entries1 = get_tags([Header, Footer | Entries], Env3, File, Opts),
+    Data = edoc_data:module(Module, Entries1, Env3, Opts),
     {Name, Data}.
 
 
@@ -188,7 +189,7 @@ header(Forms, Comments, File, Env, Opts) ->
 
 header(Forms, File, Env, Opts) when is_list(Forms) ->
     header(erl_syntax:form_list(Forms), File, Env, Opts);
-header(Tree, File0, Env, _Opts) ->
+header(Tree, File0, Env, Opts) ->
     Forms = preprocess_forms(Tree),
     File = edoc_lib:filename(File0),
     Module = #module{name = Env#env.module},  % a dummy module record
@@ -204,7 +205,7 @@ header(Tree, File0, Env, _Opts) ->
 	    warning(File, "documentation before function definitions is ignored by @headerfile", []);
        true -> ok
     end,
-    [Entry] = get_tags([Footer#entry{name = header}], Env, File),
+    [Entry] = get_tags([Footer#entry{name = header}], Env, File, Opts),
     Entry#entry.data.
 
 %% NEW-OPTIONS: def
@@ -214,7 +215,6 @@ add_macro_defs(Defs0, Opts, Env) ->
     Defs = proplists:append_values(def, Opts),
     edoc_macros:check_defs(Defs),
     Env#env{macros = Defs ++ Defs0 ++ Env#env.macros}.
-
 
 %% @spec file(File::filename(), Context, Env::edoc_env(),
 %%            Options::proplist()) -> {ok, Tags} | {error, Reason}
@@ -351,6 +351,13 @@ preprocess_forms_2(F, Fs) ->
 	    [F | preprocess_forms_1(Fs)];
   	text ->
   	    [F | preprocess_forms_1(Fs)];
+        {attribute, {N, _}} ->
+            case edoc_dia:is_dialyzer_tag(N) of
+                true ->
+                    [F | preprocess_forms_1(Fs)];
+                false ->
+                    preprocess_forms_1(Fs)
+            end;
 	_ ->
 	    preprocess_forms_1(Fs)
     end.
@@ -389,6 +396,15 @@ collect([F | Fs], Cs, As, Header, Mod) ->
 	    collect(Fs, [], As, #entry{name = module, line = L,
 				       data = comment_text(Cs)},
 		    Mod);
+        {attribute, {N, _}} ->
+            case edoc_dia:is_dialyzer_tag(N) of
+                true ->
+                    %% Ignore Dialyzer specs and types.
+                    collect(Fs, Cs, As, Header, Mod);
+                false ->
+                    %% Drop current seen comments.
+                    collect(Fs, [], As, Header, Mod)
+            end;
 	_ ->
 	    %% Drop current seen comments.
 	    collect(Fs, [], As, Header, Mod)
@@ -507,6 +523,12 @@ tidy_name_1(Cs) -> [$_ | Cs].
 
 capitalize([C | Cs]) when C >= $a, C =< $z -> [C - 32 | Cs];
 capitalize(Cs) -> Cs.
+
+%% Collects tags, then replaces some of them with Dialyzer data.
+
+get_tags(Es0, Env, File, Opts) ->
+    Es = get_tags(Es0, Env, File),
+    edoc_dia:tags(Es, Env, Opts).
 
 %% Collects the tags belonging to each entry, checks them, expands
 %% macros and parses the content.

@@ -28,9 +28,10 @@
 
 -module(edoc_data).
 
--export([module/4, package/4, overview/4, type/2]).
+-export([module/4, package/4, overview/4, type/2, function_filter/2]).
 
 -include("edoc.hrl").
+-include("edoc_types.hrl").
 
 %% TODO: report multiple definitions of the same type in the same module.
 %% TODO: check that variables in @equiv are found in the signature
@@ -130,9 +131,22 @@ module_args(Vs) ->
     [{args, [{arg, [{argName, [atom_to_list(V)]}]} || V <- Vs]}].
 
 types(Tags, Env) ->
+    Types = [{{Def, Line}, Doc} 
+             || #tag{name = Name, line = Line, data = {Def, Doc}} <- Tags,
+                edoc_dia:edoc_dialyzer_tag(Name) =:= type],
+    report_duplicated_types(element(1, lists:unzip(Types))),
     [{typedecl, [{label, edoc_types:to_label(Def)}],
       [edoc_types:to_xml(Def, Env)] ++ description(Doc)}
-     || #tag{name = type, data = {Def, Doc}} <- Tags].
+     || {{Def,_Line}, Doc} <- Types].
+
+report_duplicated_types(Types) ->
+    L = [{{N, M, length(As)}, Line} || 
+            {#t_typedef{name = #t_name{module=M, name=N}, args=As},
+             Line} <- Types],
+    [edoc_report:warning(io_lib:fwrite("~w: duplicated type ~w/~w",
+                                       [Line, N, A])) ||
+        {{N, _M, A}, Line} <- L -- lists:ukeysort(1, L)],
+    ok.
 
 functions(Es, Env, Opts) ->
     [function(N, As, Export, Ts, Env, Opts)
@@ -396,18 +410,27 @@ signature(Ts, As, Env) ->
 	[T] ->
 	    Spec = T#tag.data,
 	    R = merge_returns(Spec, Ts),
-	    As0 = edoc_types:arg_names(Spec),
-	    Ds0 = edoc_types:arg_descs(Spec),
+	    Ass0 = edoc_types:arg_names(Spec),
+	    Dss0 = edoc_types:arg_descs(Spec),
 	    %% choose names in spec before names in code
 	    P = dict:from_list(params(Ts)),
-	    As1 = merge_args(As0, As, Ds0, P),
+	    Ass1 = merge_args(Ass0, As, Dss0, P),
 	    %% check_params(As1, P),
-	    Spec1 = edoc_types:set_arg_names(Spec, [A || {A,_} <- As1]),
-	    {As1, R, [edoc_types:to_xml(Spec1, Env)]};
+	    Spec1 = edoc_types:set_arg_names
+                        (Spec, [[A || {A,_} <- As1] || As1 <- Ass1]),
+	    {no_dups(lists:append(Ass1)), R, [edoc_types:to_xml(Spec1, Env)]};
+            %% {hd(Ass1), R, [edoc_types:to_xml(Spec1, Env)]};
 	[] ->
 	    S = sets:new(),
 	    {[{A, ""} || A <- fix_argnames(As, S, 1)], [], []}
     end.
+
+no_dups([X, X | L]) ->
+    no_dups([X|L]);
+no_dups([X | L]) ->
+    [X | no_dups(L)];
+no_dups([]) ->
+    [].
 
 params(Ts) ->
     [T#tag.data || T <- get_tags(param, Ts)].
@@ -421,9 +444,9 @@ params(Ts) ->
 merge_returns(Spec, Ts) ->
     case get_tags(returns, Ts) of
 	[] ->
-	    case edoc_types:range_desc(Spec) of
-		"" -> [];
-		Txt -> [Txt]
+	    case [T || T <- edoc_types:range_desc(Spec), T =/= ""] of
+		[] -> [];
+                Txts -> [string:join(Txts, "; ")]
 	    end;
 	[T] -> T#tag.data
     end.
@@ -432,8 +455,9 @@ merge_returns(Spec, Ts) ->
 %% Descriptions specified with @param (in P dict) override descriptions
 %% from the spec (in Ds).
 
-merge_args(As, As1, Ds, P) ->
-    merge_args(As, As1, Ds, [], P, sets:new(), 1).
+merge_args(Ass, As1, Dss, P) ->
+    [merge_args(As, As1, Ds, [], P, sets:new(), 1) ||
+        {As, Ds} <- lists:zip(Ass, Dss)].
 
 merge_args(['_' | As], ['_' | As1], [D | Ds], Rs, P, S, N) ->
     merge_args(As, As1, Ds, Rs, P, S, N, make_name(N, S), D);
