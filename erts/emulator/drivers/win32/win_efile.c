@@ -765,6 +765,15 @@ int fd;				/* File descriptor for file to close. */
 }
 
 int
+efile_fdatasync(errInfo, fd)
+Efile_error* errInfo;		/* Where to return error codes. */
+int fd;				/* File descriptor for file to sync. */
+{
+    /* Not available in Windows, just call regular fsync */
+    return efile_fsync(errInfo, fd);
+}
+
+int
 efile_fsync(errInfo, fd)
 Efile_error* errInfo;		/* Where to return error codes. */
 int fd;				/* File descriptor for file to sync. */
@@ -1424,4 +1433,13 @@ efile_symlink(Efile_error* errInfo, char* old, char* new)
 {
     errno = ENOTSUP;
     return check_error(-1, errInfo);
+}
+
+int
+efile_fadvise(Efile_error* errInfo, int fd, Sint64 offset,
+	    Sint64 length, int advise)
+{
+    /* posix_fadvise is not available on Windows, do nothing */
+    errno = ERROR_SUCCESS;
+    return check_error(0, errInfo);
 }

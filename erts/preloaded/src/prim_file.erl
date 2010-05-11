@@ -25,7 +25,7 @@
 %%% Interface towards a single file's contents. Uses ?FD_DRV.
 
 %% Generic file contents operations
--export([open/2, close/1, sync/1, position/2, truncate/1,
+-export([open/2, close/1, datasync/1, sync/1, advise/4, position/2, truncate/1,
 	 write/2, pwrite/2, pwrite/3, read/2, read_line/1, pread/2, pread/3, copy/3]).
 
 %% Specialized file operations
@@ -96,6 +96,8 @@
 -define(FILE_IPREAD,           27).
 -define(FILE_ALTNAME,          28).
 -define(FILE_READ_LINE,        29).
+-define(FILE_FDATASYNC,        30).
+-define(FILE_ADVISE,           31).
 
 %% Driver responses
 -define(FILE_RESP_OK,          0).
@@ -130,6 +132,13 @@
 %% IPREAD variants
 -define(IPREAD_S32BU_P32BU, 0).
 
+%% POSIX file advises
+-define(POSIX_FADV_NORMAL,     0).
+-define(POSIX_FADV_RANDOM,     1).
+-define(POSIX_FADV_SEQUENTIAL, 2).
+-define(POSIX_FADV_WILLNEED,   3).
+-define(POSIX_FADV_DONTNEED,   4).
+-define(POSIX_FADV_NOREUSE,    5).
 
 
 %%%-----------------------------------------------------------------
@@ -221,6 +230,27 @@ close(Port) when is_port(Port) ->
     drv_close(Port).
 
 
+%% Returns {error, Reason} | ok.
+advise(#file_descriptor{module = ?MODULE, data = {Port, _}}, Offset,
+        Length, Advise) ->
+    Cmd0 = <<?FILE_ADVISE, Offset:64/signed, Length:64/signed>>,
+    case Advise of
+    normal ->
+        drv_command(Port, <<Cmd0/binary, ?POSIX_FADV_NORMAL:32/signed>>);
+    random ->
+        drv_command(Port, <<Cmd0/binary, ?POSIX_FADV_RANDOM:32/signed>>);
+    sequential ->
+        drv_command(Port, <<Cmd0/binary, ?POSIX_FADV_SEQUENTIAL:32/signed>>);
+    will_need ->
+        drv_command(Port, <<Cmd0/binary, ?POSIX_FADV_WILLNEED:32/signed>>);
+    dont_need ->
+        drv_command(Port, <<Cmd0/binary, ?POSIX_FADV_DONTNEED:32/signed>>);
+    no_reuse ->
+        drv_command(Port, <<Cmd0/binary, ?POSIX_FADV_NOREUSE:32/signed>>);
+    _ ->
+        {error, einval}
+    end.
+
 
 %% Returns {error, Reason} | ok.
 write(#file_descriptor{module = ?MODULE, data = {Port, _}}, Bytes) ->
@@ -292,6 +322,9 @@ pwrite(#file_descriptor{module = ?MODULE}, _, _) ->
     {error, badarg}.
 
 
+%% Returns {error, Reason} | ok.
+datasync(#file_descriptor{module = ?MODULE, data = {Port, _}}) ->
+    drv_command(Port, [?FILE_FDATASYNC]).
 
 %% Returns {error, Reason} | ok.
 sync(#file_descriptor{module = ?MODULE, data = {Port, _}}) ->
