@@ -631,10 +631,10 @@ fetch_reg(V, [{I,V}|_]) -> {x,I};
 fetch_reg(V, [_|SRs]) -> fetch_reg(V, SRs).
 
 live_regs(Regs) ->
-    foldl(fun ({I,_}, _) -> I;
-	      ([], Max) -> Max end,
-	  -1, Regs)+1.
-    
+    foldl(fun ({I,_}, _) ->
+		  I
+	  end, -1, Regs)+1.
+
     
 %%%
 %%% Convert a block to Static Single Assignment (SSA) form.
@@ -748,8 +748,7 @@ initialized_regs([{bs_context_to_binary,Src}|Is], Regs) ->
 initialized_regs([{label,_},{func_info,_,_,Arity}|_], Regs) ->
     InitRegs = free_vars_regs(Arity),
     add_init_regs(InitRegs, Regs);
-initialized_regs([_|_], Regs) -> Regs;
-initialized_regs([], Regs) -> Regs.
+initialized_regs([_|_], Regs) -> Regs.
 
 add_init_regs([{x,_}=X|T], Regs) ->
     add_init_regs(T, ordsets:add_element(X, Regs));
