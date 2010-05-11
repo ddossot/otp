@@ -604,7 +604,7 @@ f.txt:  {person, "kalle", 25}.
       <type>
         <v>Filename = name()</v>
         <v>Modes = [Mode]</v>
-        <v>&nbsp;Mode = read | write | append | raw | binary | {delayed_write, Size, Delay} | delayed_write | {read_ahead, Size} | read_ahead | compressed</v>
+        <v>&nbsp;Mode = read | write | append | exclusive | raw | binary | {delayed_write, Size, Delay} | delayed_write | {read_ahead, Size} | read_ahead | compressed</v>
         <v>&nbsp;&nbsp;Size = Delay = int()</v>
         <v>IoDevice = io_device()</v>
         <v>Reason = ext_posix() | system_limit</v>
@@ -630,6 +630,12 @@ f.txt:  {person, "kalle", 25}.
               created if it does not exist. Every write operation to a
               file opened with <c>append</c> will take place at
               the end of the file.</p>
+          </item>
+          <tag><c>exclusive</c></tag>
+          <item>
+            <p>The file, when opened for writing, is created if it
+              does not exist. If the file exists, open will return
+              <c>{error, eexist}</c>.</p>
           </item>
           <tag><c>raw</c></tag>
           <item>
