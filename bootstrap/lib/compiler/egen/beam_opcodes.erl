@@ -118,7 +118,7 @@ opcode(try_case, 1) -> 106;
 opcode(try_case_end, 1) -> 107;
 opcode(raise, 2) -> 108;
 opcode(bs_init2, 6) -> 109;
-opcode(bs_bits_to_bytes, 3) -> 110;
+%%opcode(bs_bits_to_bytes, 3) -> 110;
 opcode(bs_add, 5) -> 111;
 opcode(apply, 1) -> 112;
 opcode(apply_last, 2) -> 113;
